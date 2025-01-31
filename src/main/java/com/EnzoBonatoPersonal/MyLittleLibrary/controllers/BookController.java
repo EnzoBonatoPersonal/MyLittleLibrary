@@ -1,11 +1,11 @@
 package com.EnzoBonatoPersonal.MyLittleLibrary.controllers;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
 import com.EnzoBonatoPersonal.MyLittleLibrary.models.Book;
 import com.EnzoBonatoPersonal.MyLittleLibrary.repositories.BookRepository;
-import org.springframework.web.bind.annotation.*;
 import com.EnzoBonatoPersonal.MyLittleLibrary.exceptions.BookNotFoundException;
-import org.springframework.http.ResponseEntity;
-
+import com.EnzoBonatoPersonal.MyLittleLibrary.exceptions.GenreNotFoundException;
 
 import java.util.List;
 
@@ -29,5 +29,14 @@ public class BookController {
         return bookRepository.findByTitleIgnoreCase(title)
             .map(ResponseEntity::ok)
             .orElseThrow(() -> new BookNotFoundException(title));
+    }
+
+    @GetMapping("/genre/{genre}")
+    public ResponseEntity<List<Book>> getBooksByGenre(@PathVariable String genre) {
+        List<Book> books = bookRepository.findByGenreIgnoreCase(genre);
+        if (books.isEmpty()) {
+            throw new GenreNotFoundException(genre);
+        }
+        return ResponseEntity.ok(books);
     }
 }
