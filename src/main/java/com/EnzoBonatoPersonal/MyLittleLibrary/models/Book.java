@@ -12,4 +12,5 @@ public class Book {
     private String description;
     private String author;
     private int pages;
+    private boolean reserved;
 }
