@@ -1,4 +1,5 @@
 package com.EnzoBonatoPersonal.MyLittleLibrary.controllers;
+import com.EnzoBonatoPersonal.MyLittleLibrary.exceptions.BookNotFoundException;
 
 import com.EnzoBonatoPersonal.MyLittleLibrary.models.Book;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,6 @@ public class BookController {
             .filter(book -> book.getTitle().equalsIgnoreCase(title))
             .findFirst()
             .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).body(null));
+            .orElseThrow(() -> new BookNotFoundException(title));
     }
 }
