@@ -1,6 +1,8 @@
 package com.EnzoBonatoPersonal.MyLittleLibrary.controllers;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.EnzoBonatoPersonal.MyLittleLibrary.models.Book;
 import com.EnzoBonatoPersonal.MyLittleLibrary.repositories.BookRepository;
@@ -38,5 +40,39 @@ public class BookController {
             throw new GenreNotFoundException(genre);
         }
         return ResponseEntity.ok(books);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<Book> addBook(@RequestBody Book book) {
+        Book savedBook = bookRepository.save(book);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedBook);
+    }
+
+
+    @PutMapping("/edit/{id}")
+    @Transactional
+    public ResponseEntity<Book> editBook(@PathVariable Long id, @RequestBody Book book) {
+        return bookRepository.findById(id)
+            .map(existingBook -> {
+                existingBook.setTitle(book.getTitle());
+                existingBook.setAuthor(book.getAuthor());
+                existingBook.setGenre(book.getGenre());
+                existingBook.setDescription(book.getDescription());
+                existingBook.setPages(book.getPages());
+                existingBook.setAvailable(book.isAvailable());
+                return ResponseEntity.ok(existingBook);
+            })
+            .orElseThrow(() -> new BookNotFoundException(id.toString()));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    @Transactional
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        Book book = bookRepository.findById(id)
+            .orElseThrow(() -> new BookNotFoundException(id.toString()));
+
+        bookRepository.delete(book);
+
+        return ResponseEntity.noContent().build();
     }
 }
