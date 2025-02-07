@@ -1,0 +1,50 @@
+.books-container {
+    padding: 20px;
+}
+
+.section-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.book-list {
+    list-style: none;
+    padding: 0;
+}
+
+.book-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.book-info {
+    flex-grow: 1;
+}
+
+.description {
+    font-size: 14px;
+    color: #555;
+}
+
+.pages {
+    font-size: 12px;
+    color: #777;
+}
+
+.louer-button {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.louer-button:hover {
+    background-color: #218838;
+}

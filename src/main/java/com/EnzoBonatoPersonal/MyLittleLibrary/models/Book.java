@@ -20,4 +20,8 @@ public class Book {
     private int pages;
     private boolean available;
     private String genre;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }
