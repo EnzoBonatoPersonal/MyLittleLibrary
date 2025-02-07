@@ -70,9 +70,7 @@ public class BookController {
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         Book book = bookRepository.findById(id)
             .orElseThrow(() -> new BookNotFoundException(id.toString()));
-
         bookRepository.delete(book);
-
         return ResponseEntity.noContent().build();
     }
 }
