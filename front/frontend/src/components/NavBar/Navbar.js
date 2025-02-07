@@ -8,7 +8,7 @@ const Navbar = () => {
             <h1 className="logo">📚 My Little Library</h1>
             <div className="nav-links">
                 <Link to="/books" className="nav-button">Livres</Link>
-                <Link to="/users" className="nav-button">Mes Livres</Link>
+                <Link to="/users" className="nav-button">Utilisateurs</Link>
             </div>
         </nav>
     );
